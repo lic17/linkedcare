@@ -1,0 +1,31 @@
+apiVersion: app.k8s.io/v1beta1
+kind: Application
+metadata:
+  annotations:
+    servicemesh.linkedcare.io/enabled: "true"
+  labels:
+    app.linkedcare.io/name: bookinfo
+    app.linkedcare.io/version: v1
+  name: bookinfo
+spec:
+  addOwnerRef: true
+  componentKinds:
+  - group: ""
+    kind: Service
+  - group: apps
+    kind: Deployment
+  - group: apps
+    kind: StatefulSet
+  - group: extensions
+    kind: Ingress
+  - group: servicemesh.linkedcare.io
+    kind: Strategy
+  - group: servicemesh.linkedcare.io
+    kind: ServicePolicy
+  descriptor:
+    icons:
+    - src: /assets/bookinfo.svg
+  selector:
+    matchLabels:
+      app.linkedcare.io/name: bookinfo
+      app.linkedcare.io/version: v1

@@ -1,0 +1,38 @@
+apiVersion: servicemesh.linkedcare.io/v1alpha1
+kind: Strategy
+metadata:
+  annotations:
+    app.linkedcare.io/icon: /assets/bookinfo.svg
+    linkedcare.io/creator: admin
+    servicemesh.linkedcare.io/workloadReplicas: "1"
+    servicemesh.linkedcare.io/workloadType: deployments
+  labels:
+    app: reviews
+    app.linkedcare.io/name: bookinfo
+    app.linkedcare.io/version: v1
+  name: review-v2
+spec:
+  hosts: reviews
+  principal: v1
+  protocol: http
+  selector:
+    matchLabels:
+      app: reviews
+      app.linkedcare.io/name: bookinfo
+      app.linkedcare.io/version: v1
+  strategyPolicy: WaitForWorkloadReady
+  template:
+    spec:
+      hosts:
+      - reviews
+      http:
+      - route:
+        - destination:
+            host: reviews
+            subset: v1
+          weight: 50
+        - destination:
+            host: reviews
+            subset: v2
+          weight: 50
+  type: Canary

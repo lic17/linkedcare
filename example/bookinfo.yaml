@@ -1,0 +1,419 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    linkedcare.io/creator: admin
+    linkedcare.io/isElasticReplicas: "false"
+    servicemesh.linkedcare.io/enabled: "true"
+  labels:
+    app: details
+    app.linkedcare.io/name: bookinfo
+    app.linkedcare.io/version: v1
+    version: v1
+  name: details-v1
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: details
+      app.linkedcare.io/name: bookinfo
+      app.linkedcare.io/version: v1
+      version: v1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      creationTimestamp: null
+      labels:
+        app: details
+        app.linkedcare.io/name: bookinfo
+        app.linkedcare.io/version: v1
+        version: v1
+    spec:
+      containers:
+      - image: kubesphere/examples-bookinfo-details-v1:1.13.0
+        imagePullPolicy: IfNotPresent
+        name: details
+        ports:
+        - containerPort: 9080
+          name: http-web
+          protocol: TCP
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1000Mi
+          requests:
+            cpu: 10m
+            memory: 10Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: default
+      serviceAccountName: default
+      terminationGracePeriodSeconds: 30
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    linkedcare.io/creator: admin
+    linkedcare.io/isElasticReplicas: "false"
+    servicemesh.linkedcare.io/enabled: "true"
+  labels:
+    app: productpage
+    app.linkedcare.io/name: bookinfo
+    app.linkedcare.io/version: v1
+    version: v1
+  name: productpage-v1
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: productpage
+      app.linkedcare.io/name: bookinfo
+      app.linkedcare.io/version: v1
+      version: v1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      creationTimestamp: null
+      labels:
+        app: productpage
+        app.linkedcare.io/name: bookinfo
+        app.linkedcare.io/version: v1
+        version: v1
+    spec:
+      containers:
+      - image: kubesphere/examples-bookinfo-productpage-v1:1.13.0
+        imagePullPolicy: IfNotPresent
+        name: productpage
+        ports:
+        - containerPort: 9080
+          name: http-web
+          protocol: TCP
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1000Mi
+          requests:
+            cpu: 10m
+            memory: 10Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: default
+      serviceAccountName: default
+      terminationGracePeriodSeconds: 30
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    linkedcare.io/creator: admin
+    linkedcare.io/isElasticReplicas: "false"
+    servicemesh.linkedcare.io/enabled: "true"
+  labels:
+    app: ratings
+    app.linkedcare.io/name: bookinfo
+    app.linkedcare.io/version: v1
+    version: v1
+  name: ratings-v1
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: ratings
+      app.linkedcare.io/name: bookinfo
+      app.linkedcare.io/version: v1
+      version: v1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      creationTimestamp: null
+      labels:
+        app: ratings
+        app.linkedcare.io/name: bookinfo
+        app.linkedcare.io/version: v1
+        version: v1
+    spec:
+      containers:
+      - image: kubesphere/examples-bookinfo-ratings-v1:1.13.0
+        imagePullPolicy: IfNotPresent
+        name: ratings
+        ports:
+        - containerPort: 9080
+          name: http-web
+          protocol: TCP
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1000Mi
+          requests:
+            cpu: 10m
+            memory: 10Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: default
+      serviceAccountName: default
+      terminationGracePeriodSeconds: 30
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    linkedcare.io/creator: admin
+    linkedcare.io/isElasticReplicas: "false"
+    servicemesh.linkedcare.io/enabled: "true"
+  labels:
+    app: reviews
+    app.linkedcare.io/name: bookinfo
+    app.linkedcare.io/version: v1
+    version: v1
+  name: reviews-v1
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: reviews
+      app.linkedcare.io/name: bookinfo
+      app.linkedcare.io/version: v1
+      version: v1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      creationTimestamp: null
+      labels:
+        app: reviews
+        app.linkedcare.io/name: bookinfo
+        app.linkedcare.io/version: v1
+        version: v1
+    spec:
+      containers:
+      - image: kubesphere/examples-bookinfo-reviews-v1:1.13.0
+        imagePullPolicy: IfNotPresent
+        name: reviews
+        ports:
+        - containerPort: 9080
+          name: http-web
+          protocol: TCP
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1000Mi
+          requests:
+            cpu: 10m
+            memory: 10Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: default
+      serviceAccountName: default
+      terminationGracePeriodSeconds: 30
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    linkedcare.io/creator: admin
+    linkedcare.io/isElasticReplicas: "false"
+    servicemesh.linkedcare.io/enabled: "true"
+  labels:
+    app: reviews
+    app.linkedcare.io/name: bookinfo
+    app.linkedcare.io/version: v1
+    version: v2
+  name: reviews-v2
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: reviews
+      app.linkedcare.io/name: bookinfo
+      app.linkedcare.io/version: v1
+      version: v2
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      creationTimestamp: null
+      labels:
+        app: reviews
+        app.linkedcare.io/name: bookinfo
+        app.linkedcare.io/version: v1
+        version: v2
+    spec:
+      containers:
+      - image: kubesphere/examples-bookinfo-reviews-v2:1.13.0
+        imagePullPolicy: IfNotPresent
+        name: reviews
+        ports:
+        - containerPort: 9080
+          name: http-web
+          protocol: TCP
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1000Mi
+          requests:
+            cpu: 10m
+            memory: 10Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: default
+      serviceAccountName: default
+      terminationGracePeriodSeconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    linkedcare.io/creator: admin
+    linkedcare.io/workloadType: Deployment
+    servicemesh.linkedcare.io/enabled: "true"
+  labels:
+    app: details
+    app.linkedcare.io/name: bookinfo
+    app.linkedcare.io/version: v1
+  name: details
+spec:
+  ports:
+  - name: http-web
+    port: 9080
+    protocol: TCP
+    targetPort: 9080
+  selector:
+    app: details
+    app.linkedcare.io/name: bookinfo
+    app.linkedcare.io/version: v1
+  sessionAffinity: None
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    linkedcare.io/creator: admin
+    linkedcare.io/workloadType: Deployment
+    servicemesh.linkedcare.io/enabled: "true"
+  labels:
+    app: productpage
+    app.linkedcare.io/name: bookinfo
+    app.linkedcare.io/version: v1
+  name: productpage
+spec:
+  ports:
+  - name: http-web
+    port: 9080
+    protocol: TCP
+    targetPort: 9080
+  selector:
+    app: productpage
+    app.linkedcare.io/name: bookinfo
+    app.linkedcare.io/version: v1
+  sessionAffinity: None
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    linkedcare.io/creator: admin
+    linkedcare.io/workloadType: Deployment
+    servicemesh.linkedcare.io/enabled: "true"
+  labels:
+    app: ratings
+    app.linkedcare.io/name: bookinfo
+    app.linkedcare.io/version: v1
+  name: ratings
+spec:
+  ports:
+  - name: http-web
+    port: 9080
+    protocol: TCP
+    targetPort: 9080
+  selector:
+    app: ratings
+    app.linkedcare.io/name: bookinfo
+    app.linkedcare.io/version: v1
+  sessionAffinity: None
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    linkedcare.io/creator: admin
+    linkedcare.io/workloadType: Deployment
+    servicemesh.linkedcare.io/enabled: "true"
+  labels:
+    app: reviews
+    app.linkedcare.io/name: bookinfo
+    app.linkedcare.io/version: v1
+  name: reviews
+spec:
+  ports:
+  - name: http-web
+    port: 9080
+    protocol: TCP
+    targetPort: 9080
+  selector:
+    app: reviews
+    app.linkedcare.io/name: bookinfo
+    app.linkedcare.io/version: v1
+  sessionAffinity: None
+  type: ClusterIP

@@ -1,0 +1,134 @@
+# Copyright 2020 The Kubernetes Authors.
+# SPDX-License-Identifier: Apache-2.0
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: linkedcare-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  labels:
+    app.linkedcare.io/name: lk-controller-manager
+    control-plane: lk-controller-manager
+  name: lk-controller-manager-lk-controller-manager-role
+rules:
+- apiGroups:
+  - '*'
+  resources:
+  - '*'
+  verbs:
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - networking.istio.io
+  resources:
+  - destinationrules
+  - virtualservices
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - servicemesh.linkedcare.io
+  resources:
+  - servicepolicies
+  - strategies
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - app.k8s.io
+  resources:
+  - applications
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - app.k8s.io
+  resources:
+  - applications/status
+  verbs:
+  - get
+  - patch
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app.linkedcare.io/name: lk-controller-manager
+    control-plane: lk-controller-manager
+  name: lk-controller-manager-lk-controller-manager-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: lk-controller-manager-lk-controller-manager-role
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: linkedcare-system
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.linkedcare.io/name: lk-controller-manager
+    control-plane: lk-controller-manager
+  name: lk-controller-manager
+  namespace: linkedcare-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.linkedcare.io/name: lk-controller-manager
+      control-plane: lk-controller-manager
+  template:
+    metadata:
+      labels:
+        app.linkedcare.io/name: lk-controller-manager
+        control-plane: lk-controller-manager
+    spec:
+      containers:
+      - name: lk-controller-manager
+        image: registry.cn-hangzhou.aliyuncs.com/linkedcare/lc-controller-manager:0.1-v1alpha1
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            cpu: 100m
+            memory: 30Mi
+          requests:
+            cpu: 100m
+            memory: 20Mi
+      terminationGracePeriodSeconds: 10

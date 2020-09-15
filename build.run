@@ -1,0 +1,2 @@
+GOOS=linux GOARCH=amd64 go build -tags netgo -ldflags '-linkmode external -extldflags -static -w' -o ./build/controller-manager/controller-manager ./cmd/controller-manager/
+GOOS=linux GOARCH=amd64 go build -tags netgo -ldflags '-linkmode external -extldflags -static -w' -o ./build/apiserver/apiserver ./cmd/apiserver/
