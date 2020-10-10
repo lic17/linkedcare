@@ -206,6 +206,11 @@ func (v *ApplicationController) syncApplication(key string) error {
 	}
 
 	annotations := application.GetAnnotations()
+
+	if annotations == nil {
+		annotations = make(map[string]string)
+	}
+
 	annotations["linkedcare.io/last-updated"] = time.Now().String()
 	application.SetAnnotations(annotations)
 
